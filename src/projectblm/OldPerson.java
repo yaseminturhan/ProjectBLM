@@ -9,6 +9,12 @@ package projectblm;
  *
  * @author yaseminturhan
  */
-public class OldPerson {
+public class OldPerson extends Person{
+    
+    private final int rentLimit= 10;
+    
+    public OldPerson(String name, String surname, double balance, int rentLimit) {
+        super(name, surname, balance, rentLimit);
+    }
     
 }

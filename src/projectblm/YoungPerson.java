@@ -9,6 +9,16 @@ package projectblm;
  *
  * @author yaseminturhan
  */
-public class YoungPerson {
+public class YoungPerson extends Person{
     
+    private final double balanceLimit= 120.75;
+    private final int rentLimit= 10;
+
+    public YoungPerson(String name, String surname, double balance, int rentLimit) {
+        super(name, surname, balance, rentLimit);
+    }
+    
+    public void showLimits(){
+        
+    }
 }
