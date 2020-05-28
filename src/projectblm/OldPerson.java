@@ -17,4 +17,14 @@ public class OldPerson extends Person{
         super(name, surname, balance, rentLimit);
     }
     
+    public void showLimits(){
+        System.out.println(toString());
+    }
+
+    @Override
+    public String toString() {
+        return "OldPerson{" + "rentLimit=" + rentLimit + '}';
+    }
+    
+    
 }

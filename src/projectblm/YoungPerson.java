@@ -19,6 +19,13 @@ public class YoungPerson extends Person{
     }
     
     public void showLimits(){
-        
+        System.out.println(toString());
     }
+
+    @Override
+    public String toString() {
+        return "YoungPerson{" + "balanceLimit=" + balanceLimit + ", rentLimit=" + rentLimit + '}';
+    }
+    
+    
 }

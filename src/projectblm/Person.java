@@ -16,6 +16,7 @@ public class Person {
     private double balance;
     private int rentLimit;
     private Movie[] rentHistory = new Movie[100];
+    private Movie[] currentMovies = new Movie[rentLimit];
     
     public Person(String name, String surname, double balance, int rentLimit) {
         this.firstName = name;
@@ -27,11 +28,25 @@ public class Person {
     
     public void displayRentHistory(){
         
+        System.out.println("Kiralanıp teslim edilen filmler");
+        for(int i=0; i<rentHistory.length; i++){
+            System.out.println(rentHistory[i].toString());
+        }
+        
     }
     
     public void displayRentHistory(String movieType){
         
+        System.out.println(" Kiralanıp teslim edilen "+movieType+" filmleri");
+        movieType+="Movie";
+        for(int i=0; i<rentHistory.length; i++){
+            if(rentHistory[i].getClass().getSimpleName().toLowerCase().contains(movieType.toLowerCase())){
+                System.out.println(rentHistory[i].toString());
+            }
+        }
+        
     }
+    
 
     public String getFirstName() {
         return firstName;
@@ -77,8 +92,5 @@ public class Person {
     public void setCurrentMovies(Movie[] currentMovies) {
         this.currentMovies = currentMovies;
     }
-    private Movie[] currentMovies = new Movie[rentLimit];
-
-   
     
 }

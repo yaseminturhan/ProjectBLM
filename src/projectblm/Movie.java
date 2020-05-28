@@ -71,8 +71,15 @@ public class Movie {
         this.duration = duration;
     }
     
-     public void displayMovie(){
-         
-     }
-     
+    public void displayMovie(){
+         System.out.println(toString());
+    }
+
+    @Override
+    public String toString() {
+        return "Movie{" + "movieName=" + movieName + ", price=" + price + ", quantity=" + quantity + ", releaseDate=" + releaseDate + ", duration=" + duration + '}';
+    }
+    
+    
+    
 }
