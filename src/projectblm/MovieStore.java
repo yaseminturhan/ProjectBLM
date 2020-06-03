@@ -35,7 +35,7 @@ public class MovieStore {
 
         boolean isRent = false;
         boolean isFind = false;
-        
+
         for (int i = 0; i < filmCount; i++) {
 
             if (movieList[i].getMovieName().equals(movieName)) {
@@ -43,63 +43,58 @@ public class MovieStore {
                 if (movieList[i].getQuantity() > 0) {
 
                     if (person.getBalance() >= movieList[i].getPrice()) {
-                        
+
                         int personMovieCount = 0;
-                        for(int j=0; j<person.getCurrentMovies().length; j++){
-                            if(person.getCurrentMovies()[j]!=null){
+                        for (int j = 0; j < person.getCurrentMovies().length; j++) {
+                            if (person.getCurrentMovies()[j] != null) {
                                 personMovieCount++;
                             }
                         }
 
                         if (personMovieCount < person.getRentLimit()) {
-                            
+
                             int rentedMovieCount = 0;
-                            for(int k=0; k<rentedMovies.length; k++){
-                                if(rentedMovies[k]!=null){
+                            for (int k = 0; k < rentedMovies.length; k++) {
+                                if (rentedMovies[k] != null) {
                                     rentedMovieCount++;
                                 }
                             }
 
                             if (rentedMovieCount < rentLimit) {
                                 Movie[] pm = person.getCurrentMovies();
-                                
+
                                 pm[0] = movieList[i];
                                 person.setCurrentMovies(pm);
 
-          
-                                
-                                
                                 int customerCount = 0;
                                 boolean isSameCustomer = false;
-                                for(int m=0; m<customersList.length; m++){
-                                    if(customersList[m]!=null){
-                                        
-                                        if(customersList[m].getFirstName().equals(person.getFirstName())){
+                                for (int m = 0; m < customersList.length; m++) {
+                                    if (customersList[m] != null) {
+
+                                        if (customersList[m].getFirstName().equals(person.getFirstName())) {
                                             customersList[m] = person;
                                             isSameCustomer = true;
                                             break;
-                                            
+
                                         }
                                         customerCount++;
                                     }
                                 }
-                                
-                                if(!isSameCustomer){
+
+                                if (!isSameCustomer) {
                                     customersList[customerCount] = person;
                                 }
-                                
 
-                                
                                 movieList[i].setQuantity(movieList[i].getQuantity() - 1);
-                                
+
                                 rentedMovies[rentedMovieCount] = movieList[i];
-                                person.setBalance(person.getBalance()-movieList[i].getPrice());
-                                income+= movieList[i].getPrice();
+                                person.setBalance(person.getBalance() - movieList[i].getPrice());
+                                income += movieList[i].getPrice();
                                 isRent = true;
-                                System.out.println("Film başarı ile kiralanmıştır!");      
+                                System.out.println("Film başarı ile kiralanmıştır!");
 
                                 break;
-  
+
                             } else {
                                 System.out.println("Mağazanın film kiralama limiti dolmuştur!");
                                 isRent = false;
@@ -124,8 +119,8 @@ public class MovieStore {
                 }
             }
         }
-        
-        if(!isFind){
+
+        if (!isFind) {
             System.out.println("Film mağazada yok!");
             isRent = false;
         }
@@ -136,43 +131,41 @@ public class MovieStore {
 
         boolean state = false;
         for (int i = 0; i < rentLimit; i++) {
-            if(rentedMovies[i]!= null && movieName.equals(rentedMovies[i].getMovieName())){
-                
+            if (rentedMovies[i] != null && movieName.equals(rentedMovies[i].getMovieName())) {
+
                 int historyCount = 0;
-                for(int j=0; j<person.getRentHistory().length; j++){
-                    if(person.getRentHistory()[j]!=null){
+                for (int j = 0; j < person.getRentHistory().length; j++) {
+                    if (person.getRentHistory()[j] != null) {
                         historyCount++;
                     }
                 }
-                
+
                 Movie[] pm = person.getRentHistory();
                 pm[historyCount] = rentedMovies[i];
                 person.setRentHistory(pm);
-                person.getRentHistory()[0] = rentedMovies[i];
-                
-                
+                person.getRentHistory()[historyCount] = rentedMovies[i];
+
                 int movieIndex = Arrays.asList(movieList).indexOf(rentedMovies[i]);
                 movieList[movieIndex].setQuantity(movieList[movieIndex].getQuantity() + 1);
-                
+
                 List<Movie> tempList = new ArrayList<>(Arrays.asList(rentedMovies));
+
+                List<Movie> tempListPerson = new ArrayList<>(Arrays.asList(person.getCurrentMovies()));
+                tempListPerson.remove(rentedMovies[i]);
                 tempList.remove(i);
                 rentedMovies = tempList.toArray(rentedMovies);
-                
-                
-                List<Movie> tempListPerson = new ArrayList<>(Arrays.asList(person.getCurrentMovies()));
-                tempListPerson.remove(i);
                 person.setCurrentMovies(tempListPerson.toArray(person.getCurrentMovies()));
-                
+
                 state = true;
                 break;
             }
         }
-        
-        if(state){
+
+        if (state) {
             System.out.println("Film iadesi başarılı bir şekilde gerçekleşti!");
             return true;
-            
-        }else{
+
+        } else {
             System.out.println("Film mağazada yok, yanlış mağaza!");
             return false;
         }
@@ -186,7 +179,7 @@ public class MovieStore {
     public void printCurrentRentedMovies() {
         System.out.println("Güncel kiralanan filmler :");
         for (int i = 0; i < rentLimit; i++) {
-            if(rentedMovies[i]!=null){
+            if (rentedMovies[i] != null) {
                 System.out.println(rentedMovies[i].toString());
             }
         }
@@ -194,11 +187,14 @@ public class MovieStore {
 
     public void printCurrentRentedMovies(String firstName, String lastName) {
         for (int i = 0; i < customersList.length; i++) {
-            
-            if (customersList[i]!=null && customersList[i].getFirstName().equals(firstName) && customersList[i].getLastName().equals(lastName)) {
+
+            if (customersList[i] != null && customersList[i].getFirstName().equals(firstName) && customersList[i].getLastName().equals(lastName)) {
                 System.out.println(firstName + " " + lastName + " isimli kullanıcının filmleri :");
                 for (int j = 0; j < customersList[i].getCurrentMovies().length; j++) {
-                    System.out.println(customersList[i].getCurrentMovies()[i].toString());
+                    if (customersList[i].getCurrentMovies()[i] != null) {
+                        System.out.println(customersList[i].getCurrentMovies()[i].toString());
+                    }
+
                 }
                 break;
             }
@@ -209,10 +205,10 @@ public class MovieStore {
 
         System.out.println("Mağazadaki bütün filmler :");
         for (int i = 0; i < filmCount; i++) {
-            if(movieList[i]!=null){
-                System.out.println(movieList[i].toString()); 
+            if (movieList[i] != null) {
+                System.out.println(movieList[i].toString());
             }
-            
+
         }
     }
 
@@ -220,14 +216,14 @@ public class MovieStore {
 
         boolean isFind = false;
         for (int i = 0; i < filmCount; i++) {
-            if (movieList[i]!= null && movieList[i].getMovieName().equals(movieName)) {
+            if (movieList[i] != null && movieList[i].getMovieName().equals(movieName)) {
                 System.out.println(movieName + " filmi özellikleri :");
                 System.out.println(movieList[i].toString());
-                isFind=true;
+                isFind = true;
                 break;
             }
         }
-        if(!isFind){
+        if (!isFind) {
             System.out.println(movieName + " isimli bir film bulunamadı!");
         }
     }
@@ -280,7 +276,7 @@ public class MovieStore {
             if (customersList[i] != null) {
                 for (int j = 0; j < customersList[i].getCurrentMovies().length; j++) {
                     if (customersList[i].getCurrentMovies()[i] != null) {
-                        if (customersList[i].getCurrentMovies()[j].getMovieName().equals(movieName)) {
+                        if (customersList[i].getCurrentMovies()[j]!=null && customersList[i].getCurrentMovies()[j].getMovieName().equals(movieName)) {
                             System.out.println("Silinmek istenen film müşteri tarafından kiralanmış durumda!");
                             isRent = true;
                             break;
@@ -288,7 +284,7 @@ public class MovieStore {
                     }
                 }
             }
-            if(isRent){
+            if (isRent) {
                 break;
             }
         }
@@ -308,8 +304,7 @@ public class MovieStore {
                 System.out.println("Silinmek istenen film ismi mağazada bulunamadı!");
             }
         }
-        
-        
+
     }
 
 }

@@ -77,7 +77,7 @@ public class Movie {
 
     @Override
     public String toString() {
-        return "Movie{" + "movieName=" + movieName + ", price=" + price + ", quantity=" + quantity + ", releaseDate=" + releaseDate + ", duration=" + duration + '}';
+        return "film adı=" + movieName + ", ücreti =" + price + ", adedi =" + quantity + ", çıkış tarihi =" + releaseDate + ", süresi =" + duration + '}';
     }
     
     
